@@ -1,37 +1,26 @@
 import { create } from 'zustand';
 import { persist, devtools, createJSONStorage } from 'zustand/middleware';
+import { Auth, Loading, TokenResponse } from '../types/types';
 
-type authState = {
-  token: string;
-  profile: any;
-  isAuthenticated: boolean;
-};
 
-type authActions = {
-  setToken: (token: string) => void;
-  setProfile: (profile: any) => void;
-  setLogout: () => void;
-};
-
-export const useStore = create<authState & authActions>()(
+export const useStore = create<Auth & Loading>()(
   devtools(
     persist(
       (set) => ({
-        token: '',
-        profile: null,
+        tokenResponse: null,
+        user: null,
         isAuthenticated: false,
-        setToken: token => set({ token }),
-        setProfile: profile => set({ profile, isAuthenticated: true }),
-        setLogout: () => set({ token: '', isAuthenticated: false, profile: null })
+        loading: false,
+        setTokenResponse: (tokenResponse: TokenResponse | null) => set({ tokenResponse }),
+        setUser: user => set({ user, isAuthenticated: true }),
+        setLogout: () => set({ tokenResponse: null, isAuthenticated: false, user: null }),
+        startLoading: () => set({ loading: true }),
+        stopLoading: () => set({ loading: false }),
       }),
       {
-        name: 'auth-token',
+        name: 'myLocalStorage',
         storage: createJSONStorage(() => localStorage)
       }
     )
   )
-)
-
-
-
-
+);

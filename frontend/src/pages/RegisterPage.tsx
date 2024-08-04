@@ -1,17 +1,20 @@
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { TextField, Button, Box, Grid, Typography } from '@mui/material';
+import Request from '../api/requests';
+import notification from '../components/Notification';
+import { handleLogin } from '../utils/handleLogin';
 
 
 const validationSchema = Yup.object({
-  name: Yup.string().required('Campo obrigatório'),
+  username: Yup.string().required('Campo obrigatório'),
   email: Yup.string().email('Email inválido').required('Campo obrigatório'),
   password: Yup.string().required('Campo obrigatório'),
   confirmPassword: Yup.string().oneOf([Yup.ref('password')], 'As senhas não coincidem').required('Campo obrigatório'),
 })
 
 const initialValues = {
-  name: '',
+  username: '',
   email: '',
   password: '',
   confirmPassword: '',
@@ -20,8 +23,16 @@ const initialValues = {
 
 function RegisterPage() {
 
-  const handleSubmit = (values: any) => {
-    console.log(values);
+  const handleSubmit = async (values: any) => {
+    const { confirmPassword, ...rest } = values;
+    console.log(rest);
+    try {
+      let response = await Request.registerUser(rest)
+      handleLogin(response)
+    }
+    catch {
+      notification("Tente novamente", "error")
+    }
   };
 
   return (
@@ -48,9 +59,9 @@ function RegisterPage() {
 
               <Field
                 as={TextField}
-                id="name"
-                name="name"
-                label="Name"
+                id="username"
+                name="username"
+                label="Username"
                 variant="outlined"
                 fullWidth
                 onChange={(e: any) => {
@@ -58,8 +69,8 @@ function RegisterPage() {
                   setFieldError('name', '');
                 }}
                 onBlur={handleBlur}
-                error={Boolean(touched.name && errors.name)}
-                helperText={touched.name && <ErrorMessage name="name" />}
+                error={Boolean(touched.username && errors.username)}
+                helperText={touched.username && <ErrorMessage name="name" />}
                 style={{ marginBottom: 20 }}
               />
 

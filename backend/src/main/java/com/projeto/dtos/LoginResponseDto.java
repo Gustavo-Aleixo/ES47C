@@ -1,5 +1,5 @@
 package com.projeto.dtos;
 
-public record LoginResponseDto(String token, UserDto user) {
+public record LoginResponseDto(TokenResponse tokenResponse, UserDto user) {
 
 }

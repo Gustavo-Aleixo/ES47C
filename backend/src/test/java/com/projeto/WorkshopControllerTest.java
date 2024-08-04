@@ -25,7 +25,8 @@ import java.util.Random;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
- * Teste usando conexão real com o banco de dados, portante, certifique-se de estar conectado.
+ * Teste usando conexão real com o banco de dados, portante, certifique-se de
+ * estar conectado.
  */
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
@@ -58,7 +59,7 @@ public class WorkshopControllerTest {
 				new HttpEntity<>(authetinticationDtoJson, createJsonHeaders()),
 				LoginResponseDto.class);
 
-		token = response.getBody().token();
+		token = response.getBody().tokenResponse().token();
 	}
 
 	@Test

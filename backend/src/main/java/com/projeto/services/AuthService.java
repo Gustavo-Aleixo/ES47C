@@ -41,14 +41,14 @@ public class AuthService implements UserDetailsService {
 
 	public LoginResponseDto login(@Valid @RequestBody AuthetinticationDto data) {
 
-		//resolve problema da dependencia circular 
+		// resolve problema da dependencia circular
 		authenticationManager = context.getBean(AuthenticationManager.class);
 
 		var emailPassword = new UsernamePasswordAuthenticationToken(data.email(), data.password());
 		var auth = authenticationManager.authenticate(emailPassword);
 		var user = (User) auth.getPrincipal();
-		var token = tokenService.generateToken(user);
-		return new LoginResponseDto(token, new UserDto(user.getId(), user.getEmail(), user.getUsername()));
+		var tokenResponse = tokenService.generateToken(user);
+		return new LoginResponseDto(tokenResponse, new UserDto(user.getId(), user.getEmail(), user.getUsername()));
 	}
 
 	public LoginResponseDto register(@RequestBody RegisterDto registerDto) {
