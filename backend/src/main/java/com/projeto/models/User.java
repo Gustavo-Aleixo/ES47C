@@ -22,13 +22,9 @@ import java.util.List;
 @AllArgsConstructor
 @Entity
 @Table(name = "USERS")
-public class User implements UserDetails {
+public class User extends BaseEntity implements UserDetails {
 
 	private static final long serialVersionUID = 1L;
-
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
 
 	@Column(nullable = false)
 	private String email;
@@ -38,12 +34,6 @@ public class User implements UserDetails {
 
 	@Column(nullable = false)
 	private String password;
-
-	public User(String email, String username, String password) {
-		this.email = email;
-		this.username = username;
-		this.password = password;
-	}
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {

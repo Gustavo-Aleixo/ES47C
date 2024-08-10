@@ -8,7 +8,7 @@ import com.projeto.models.Workshop;
 @RepositoryRestResource(collectionResourceRel = "workshop", path = "workshops")
 public interface WorkshopRepository extends JpaRepository<Workshop, Long> {
 
-	public Optional<Workshop> findByNameContainingIgnoreCase(String name);
+	public Optional<Workshop> findByTitleContainingIgnoreCase(String title);
 
 	public Optional<Workshop> findById(Long code);
 }

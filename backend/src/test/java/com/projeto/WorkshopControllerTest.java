@@ -9,6 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import com.projeto.dtos.LoginResponseDto;
 import com.projeto.dtos.RegisterDto;
+import com.projeto.dtos.WorkshopDto;
 import com.projeto.models.Workshop;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.boot.test.web.client.TestRestTemplate;
@@ -18,9 +19,9 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.UUID;
-import java.util.Date;
 import java.util.Random;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -34,6 +35,9 @@ public class WorkshopControllerTest {
 
 	@LocalServerPort
 	private int port;
+
+	@Autowired
+	Jackson2ObjectMapperBuilder mapperBuilder;
 
 	@Autowired
 	private TestRestTemplate restTemplate;
@@ -67,8 +71,10 @@ public class WorkshopControllerTest {
 	void deveRetornarUmCadastroBemSucedido() throws Exception {
 
 		// Crie um objeto e converte para JSON
-		Workshop authetinticationDto = new Workshop("ANTES", new Date());
-		String authetinticationDtoJson = new ObjectMapper().writeValueAsString(authetinticationDto);
+
+		WorkshopDto authetinticationDto = new WorkshopDto("ANTES", 1L, "2024-08-30T00:00", 1);
+		ObjectMapper mapper = mapperBuilder.build();
+		String authetinticationDtoJson = mapper.writeValueAsString(authetinticationDto);
 
 		// Envie a solicitação POST para o endpoint /register e verifique a resposta
 		ResponseEntity<Workshop> response = restTemplate.postForEntity(
@@ -86,8 +92,9 @@ public class WorkshopControllerTest {
 	void deveAlterarUmCadastroExistente() throws Exception {
 
 		// Crie um objeto e converte para JSON
-		Workshop authetinticationDto = new Workshop("DEPOIS", new Date());
-		String authetinticationDtoJson = new ObjectMapper().writeValueAsString(authetinticationDto);
+		WorkshopDto authetinticationDto = new WorkshopDto("ANTES", 1L, "2024-08-30T00:00", 1);
+		ObjectMapper mapper = mapperBuilder.build();
+		String authetinticationDtoJson = mapper.writeValueAsString(authetinticationDto);
 
 		// Envie a solicitação POST para o endpoint /register e verifique a resposta
 		ResponseEntity<Workshop> response = restTemplate.exchange(
@@ -104,7 +111,7 @@ public class WorkshopControllerTest {
 	void testeSemTokenDeveRetornarUmCadastroMalSucedido() throws Exception {
 
 		// Crie um objeto e converte para JSON
-		Workshop authetinticationDto = new Workshop("TESTE SEM TOKEN", new Date());
+		Workshop authetinticationDto = new Workshop();
 		String authetinticationDtoJson = new ObjectMapper().writeValueAsString(authetinticationDto);
 
 		// Envie a solicitação POST para o endpoint /register e verifique a resposta
@@ -121,7 +128,7 @@ public class WorkshopControllerTest {
 	void valorNuloDeveRetornarUmCadastroMalSucedido() throws Exception {
 
 		// Crie um objeto e converte para JSON
-		Workshop authetinticationDto = new Workshop(null, new Date());
+		Workshop authetinticationDto = new Workshop();
 		String authetinticationDtoJson = new ObjectMapper().writeValueAsString(authetinticationDto);
 
 		// Envie a solicitação POST para o endpoint /register e verifique a resposta
