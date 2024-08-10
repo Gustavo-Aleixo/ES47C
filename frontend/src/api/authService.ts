@@ -3,18 +3,18 @@ import { UserLogin, UserLoginResponse, UserRegister } from '../types/types';
 
 
 const loginUser = async (login: UserLogin): Promise<UserLoginResponse> => {
-  const response = await api.post('auth/login', login);
-  return response.data;
+  return api.post('auth/login', login)
+    .then(response => response.data);
 };
 
 const registerUser = async (register: UserRegister): Promise<UserLoginResponse> => {
-  const response = await api.post('auth/register', register);
-  return response.data;
+  return api.post('auth/register', register)
+    .then(response => response.data);
 };
 
-const Request = {
+const AuthService = {
   loginUser,
   registerUser
 };
 
-export default Request;
+export default AuthService;

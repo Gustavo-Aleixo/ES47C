@@ -39,3 +39,33 @@ export type UserLoginResponse = {
   tokenResponse: TokenResponse;
   user: User;
 };
+
+
+export type WorkshopDto = {
+  title: string;
+  responsibleTeacherId: number;
+  dateTime: string;
+  maxStudents: number;
+};
+
+export type Workshop = {
+  id: number
+  title: string;
+  responsibleTeacher: Teacher;
+  dateTime: string;
+  maxStudents: number;
+};
+
+export type Teacher = {
+  id: number
+  username: string;
+  email: string;
+  area: string;
+};
+
+export type TeacherDto = {
+  username: string;
+  email: string;
+  area: string;
+};
+

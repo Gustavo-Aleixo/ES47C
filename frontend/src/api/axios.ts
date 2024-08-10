@@ -13,7 +13,7 @@ export const api = axios.create({
 api.interceptors.request.use(
   (config) => {
     startLoading()
-    config.headers.Authorization = `Bearer ${tokenResponse?.expirationTime}`
+    config.headers.Authorization = `Bearer ${tokenResponse?.token}`
     return config;
   },
   (error) => {

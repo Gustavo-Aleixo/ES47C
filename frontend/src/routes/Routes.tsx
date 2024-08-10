@@ -5,6 +5,8 @@ import LoginPage from "../pages/LoginPage";
 import { ProfilePage } from "../pages/ProfilePage";
 import RegisterPage from "../pages/RegisterPage";
 import { Navigation } from "../components/Navigation";
+import WorkshopPage from "../pages/WorkshopPage";
+import ProfessorPage from "../pages/ProfessorPage";
 
 const Routes = () => {
 
@@ -24,6 +26,8 @@ const Routes = () => {
       children: [
         { path: "/home", element: <HomePage /> },
         { path: "/profile", element: <ProfilePage /> },
+        { path: "/professor", element: <ProfessorPage /> },
+        { path: "/workshop", element: <WorkshopPage /> },
         { path: "/", element: <Navigate to="/home" /> }
       ]
     }

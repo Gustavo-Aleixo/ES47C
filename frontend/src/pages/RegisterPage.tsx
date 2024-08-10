@@ -1,9 +1,9 @@
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { TextField, Button, Box, Grid, Typography } from '@mui/material';
-import Request from '../api/requests';
 import notification from '../components/Notification';
 import { handleLogin } from '../utils/handleLogin';
+import AuthService from '../api/authService';
 
 
 const validationSchema = Yup.object({
@@ -27,7 +27,7 @@ function RegisterPage() {
     const { confirmPassword, ...rest } = values;
     console.log(rest);
     try {
-      let response = await Request.registerUser(rest)
+      let response = await AuthService.registerUser(rest)
       handleLogin(response)
     }
     catch {
@@ -70,7 +70,7 @@ function RegisterPage() {
                 }}
                 onBlur={handleBlur}
                 error={Boolean(touched.username && errors.username)}
-                helperText={touched.username && <ErrorMessage name="name" />}
+                helperText={touched.username && <ErrorMessage name="username" />}
                 style={{ marginBottom: 20 }}
               />
 
