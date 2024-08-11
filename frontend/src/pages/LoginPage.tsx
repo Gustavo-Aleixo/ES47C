@@ -2,7 +2,7 @@ import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { TextField, Button, Box, Grid, Link, Typography } from '@mui/material';
 import Paper from '@mui/material/Paper';
-import indigo from '@mui/material/colors/indigo';
+import { indigo } from '@mui/material/colors';
 import notification from '../components/Notification';
 import { handleLogin } from '../utils/handleLogin';
 import AuthService from '../api/authService';
@@ -22,7 +22,6 @@ const initialValues = {
 function LoginPage() {
 
   const handleSubmit = async (values: any) => {
-    console.log(values);
     try {
       let response = await AuthService.loginUser(values)
       handleLogin(response)

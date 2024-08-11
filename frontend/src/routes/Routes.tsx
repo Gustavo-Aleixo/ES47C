@@ -1,8 +1,8 @@
 import { Navigate, Outlet, RouterProvider, createBrowserRouter } from "react-router-dom";
 import { useStore } from '../store/useStore'
-import { HomePage } from "../pages/HomePage";
+import HomePage from "../pages/HomePage";
 import LoginPage from "../pages/LoginPage";
-import { ProfilePage } from "../pages/ProfilePage";
+import ProfilePage from "../pages/ProfilePage";
 import RegisterPage from "../pages/RegisterPage";
 import { Navigation } from "../components/Navigation";
 import WorkshopPage from "../pages/WorkshopPage";

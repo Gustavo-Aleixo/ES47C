@@ -15,7 +15,11 @@ const validationSchema = Yup.object({
   title: Yup.string().required('Campo obrigatório'),
   responsibleTeacherId: Yup.string().required('Campo obrigatório'),
   dateTime: Yup.string().required('Campo obrigatório'),
-  maxStudents: Yup.number().required('Campo obrigatório'),
+  maxStudents: Yup.number()
+    .typeError('O valor deve ser um número inteiro maior que zero')
+    .required('Campo obrigatório')
+    .positive('O valor deve ser um número inteiro maior que zero')
+    .integer('O valor deve ser um número inteiro maior que zero')
 })
 
 const initialValues = {
@@ -28,9 +32,10 @@ const initialValues = {
 
 function WorkshopPage() {
 
+  const [isCreated, setIsCreated] = useState(false);
   const navigate = useNavigate();
   const [teachers, setTeachers] = useState<Teacher[]>([]);
-
+  useEffect(() => { if (isCreated) navigate("/home"); }, [isCreated, navigate]);
 
   useEffect(() => {
     const loadTeachers = async () => {
@@ -43,9 +48,9 @@ function WorkshopPage() {
 
   const handleSubmit = async (values: any) => {
     try {
-      WorkshopService.createWorkshop(values)
+      await WorkshopService.createWorkshop(values)
       notification("Workshop registrado com sucesso.", "success")
-      navigate("/home")
+      setIsCreated(true);
     }
     catch {
       notification("Tente novamente", "error")
@@ -97,7 +102,7 @@ function WorkshopPage() {
                 options={teachers}
                 getOptionLabel={(option) => option.username}
                 sx={{ width: "100%", marginBottom: 2 }}
-                onChange={(e, newValue) => {
+                onChange={(_e, newValue) => {
                   handleChange({
                     target: {
                       name: 'responsibleTeacherId',
@@ -119,17 +124,14 @@ function WorkshopPage() {
                 )}
               />
 
-
-
-
-
               <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <DateTimePicker
                   ampm={false}
                   format="DD/MM/YYYY HH:mm"
                   label="Data e Hora"
-
-                  onChange={(value) => {
+                  closeOnSelect={true}
+                  onAccept={(value) => {
+                    //faça o popup do DateTimePicker ficar invisivel
                     setFieldValue('dateTime', value ? value.format('YYYY-MM-DDTHH:mm') : '')
                     setFieldError('dateTime', '');
                   }}
@@ -147,8 +149,6 @@ function WorkshopPage() {
                   }}
                 />
               </LocalizationProvider>
-
-
 
               <Field
                 as={TextField}

@@ -21,7 +21,7 @@ const Notification: React.FC<{
       autoHideDuration={4000}
       anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
       TransitionComponent={Transition}
-      onClose={(e, reason) => {
+      onClose={(_e, reason) => {
         if (reason === 'clickaway') return
         onClose();
       }}>

@@ -25,7 +25,6 @@ function RegisterPage() {
 
   const handleSubmit = async (values: any) => {
     const { confirmPassword, ...rest } = values;
-    console.log(rest);
     try {
       let response = await AuthService.registerUser(rest)
       handleLogin(response)
@@ -66,7 +65,7 @@ function RegisterPage() {
                 fullWidth
                 onChange={(e: any) => {
                   handleChange(e);
-                  setFieldError('name', '');
+                  setFieldError('username', '');
                 }}
                 onBlur={handleBlur}
                 error={Boolean(touched.username && errors.username)}

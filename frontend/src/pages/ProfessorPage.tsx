@@ -4,6 +4,7 @@ import { TextField, Button, Box, Grid, Typography } from '@mui/material';
 import notification from '../components/Notification';
 import { useNavigate } from 'react-router-dom';
 import TeacherService from '../api/teacherService';
+import { useEffect, useState } from 'react';
 
 
 const validationSchema = Yup.object({
@@ -21,20 +22,21 @@ const initialValues = {
 
 function ProfessorPage() {
 
+  const [isCreated, setIsCreated] = useState(false);
   const navigate = useNavigate();
+  useEffect(() => { if (isCreated) navigate("/home"); }, [isCreated, navigate]);
 
 
-  const handleSubmit = (values: any) => {
+  const handleSubmit = async (values: any) => {
     try {
-      TeacherService.createTeacher(values)
-      notification("Professor registrado com sucesso.", "success")
-      navigate("/home")
+      await TeacherService.createTeacher(values);
+      notification("Professor registrado com sucesso.", "success");
+      setIsCreated(true);
+    } catch {
+      notification("Tente novamente", "error");
     }
-    catch {
-      notification("Tente novamente", "error")
-    }
-
   };
+
 
   return (
     <Grid component="main" sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
@@ -67,11 +69,11 @@ function ProfessorPage() {
                 fullWidth
                 onChange={(e: any) => {
                   handleChange(e);
-                  setFieldError('name', '');
+                  setFieldError('username', '');
                 }}
                 onBlur={handleBlur}
                 error={Boolean(touched.username && errors.username)}
-                helperText={touched.username && <ErrorMessage name="name" />}
+                helperText={touched.username && <ErrorMessage name="username" />}
                 style={{ marginBottom: 20 }}
               />
 

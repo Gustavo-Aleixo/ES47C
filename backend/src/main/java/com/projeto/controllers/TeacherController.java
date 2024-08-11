@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.projeto.models.Teachers;
-import com.projeto.models.Workshop;
 import com.projeto.services.TeacherService;
 
 @RestController
@@ -25,28 +24,28 @@ public class TeacherController {
 
   /**
    * {
-   * "username": "Workshop de Spring Boot",
+   * "username": "Teacher de Spring Boot",
    * "email": "2024-04-14",
    * "area" : "Computação"
    * }
    */
   @PostMapping("/create")
-  public ResponseEntity<Teachers> register(@RequestBody Teachers workshop) {
-    Teachers createdWorkshop = teacherService.create(workshop);
-    return ResponseEntity.ok(createdWorkshop);
+  public ResponseEntity<Teachers> register(@RequestBody Teachers teacher) {
+    Teachers createdTeacher = teacherService.create(teacher);
+    return ResponseEntity.ok(createdTeacher);
   }
 
   /**
    * {
-   * "username": "Workshop de Spring Boot",
+   * "username": "Teacher de Spring Boot",
    * "email": "2024-04-14",
    * "area" : "Computação"
    * }
    */
   @PutMapping("/update/{id}")
-  public ResponseEntity<Teachers> update(@PathVariable Long id, @RequestBody Teachers workshop) {
-    Teachers updatedWorkshop = teacherService.update(id, workshop);
-    return ResponseEntity.ok(updatedWorkshop);
+  public ResponseEntity<Teachers> update(@PathVariable Long id, @RequestBody Teachers teacher) {
+    Teachers updatedTeacher = teacherService.update(id, teacher);
+    return ResponseEntity.ok(updatedTeacher);
   }
 
   @DeleteMapping("/delete/{id}")

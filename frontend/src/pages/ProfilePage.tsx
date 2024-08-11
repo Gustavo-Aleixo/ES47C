@@ -1,6 +1,6 @@
 import { useStore } from '../store/useStore';
 
-export const ProfilePage = () => {
+function ProfilePage() {
   const setLogout = useStore(({ setLogout }) => setLogout);
   const profile = useStore(({ profile }) => profile);
 
@@ -12,3 +12,4 @@ export const ProfilePage = () => {
     </div>
   );
 };
+export default ProfilePage;
